@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie add</title>
+    <link rel='stylesheet' href='/css/style.css' />
+</head>
+
+<body>
+    <figure>
+        <img src="/img/logo-DH.png" alt="Logo Digital House">
+      </figure>
+    <h1 class="titulo">Agregar Película</h1>
+    <br>
+
+    <% if (locals.errors) { %>
+        <div>
+                <% for ( let error in errors ) { %>
+                    <p><%= errors[error].msg %></p>
+                <% } %>
+        </div>
+    <% } %>
+    
+    <section class="formulario">
+        <form action="/movies/create" method="POST" enctype="multipart/form-data">
+            <label for="title">Title </label>
+            <p><input type="text" name="title" id="" value="<%= locals.oldData ? oldData.title : null %>"></p>
+
+            <label for="rating">Rating </label>
+            <p><input type="number" name="rating" id="" value="<%= locals.oldData ? oldData.rating : null %>"></p>
+
+            <label for="awards">Awards </label>
+            <p><input type="number" name="awards" id="" value="<%= locals.oldData ? oldData.awards : null %>"></p>
+
+            <label for="release_date">Release date </label>
+            <p><input type="date" name="release_date" id="" value="<%= locals.oldData ? oldData.release_date : null %>"></p>
+
+            <label for="length">Length </label>
+            <p><input type="number" name="length" id="" value="<%= locals.oldData ? oldData.length : null %>"></p>
+
+            <input type="file" name="image">
+            <br>
+            <label for="genreID">Genre</label>
+            <p>
+                <select name="genre_id" id="">
+                    <option value="" disabled selected>- select genre - </option>
+                    <% allGenres.forEach(genre => { %>
+                    <option value="<%= genre.id %>" <% if (locals.oldData && oldData.genre_id == genre.id) { %>
+                        selected
+                    <% } %> ><%= genre.name %></option>
+                    <% }); %>
+                </select>
+            </p>
+            <br>
+            <p> <button class="botonAgregar" type="submit">Agregar</button>
+            
+            <a  class="botonVolver" href="/movies">Listado de Películas</a></p>
+        </form>
+    </section>
+    
+</body>
+
+</html>
